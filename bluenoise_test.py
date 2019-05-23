@@ -37,7 +37,7 @@ def generate(img, width, height, kernelSize, points, marker):
 	k = 1
 	plt.plot(x, y, marker[0])
 	
-	print("float2 samples[4][", points ,"] = {")
+	print("static const float2 samples[4][", points ,"] = {")
 	
 	for value in values:
 		value = sorted(value, key=lambda v: v[1] + v[2])
@@ -72,7 +72,7 @@ def generate(img, width, height, kernelSize, points, marker):
 			
 		k += 1
 		
-	print("}")
+	print("};")
 	
 	plt.imshow(img, extent=(0, width, 0, height))
 	plt.axis([x - kernelSize, x + kernelSize, y - kernelSize, y + kernelSize])
