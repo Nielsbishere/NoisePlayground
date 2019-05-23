@@ -3,8 +3,8 @@ import random
 import math
 
 # constants
-kernelSize = 5 
-points = 16
+kernelSize = 10 
+points = 64
 marker = [ "ro", "bo", "mo", "co", "yo" ]		# Center, sample0, sample1, sample2, sample3
 
 # image
@@ -37,17 +37,42 @@ def generate(img, width, height, kernelSize, points, marker):
 	k = 1
 	plt.plot(x, y, marker[0])
 	
+	print("float2 samples[4][", points ,"] = {")
+	
 	for value in values:
 		value = sorted(value, key=lambda v: v[1] + v[2])
 		value = value[0:points];
+	
+		print("\t{")
+		
+		index = 0
 	
 		for v in value:
 			i = v[0] % width
 			j = math.floor(v[0] / width)
 			plt.plot(i + .5, j + .5, marker[k])
+			
+			if index % 4 == 0:
+				print("\t\t", end="")
+			
+			if index == len(value) - 1:
+				print("float2(", i - x, ", ", j - y, ")")
+			else:
+				print("float2(", i - x, ", ", j - y, "),", end =" ")
+				
+			if index % 4 == 3:
+				print("")
+				
+			index += 1
 
+		if k == len(values):
+			print("\t}")
+		else:
+			print("\t},")
+			
 		k += 1
 		
+	print("}")
 	
 	plt.imshow(img, extent=(0, width, 0, height))
 	plt.axis([x - kernelSize, x + kernelSize, y - kernelSize, y + kernelSize])
