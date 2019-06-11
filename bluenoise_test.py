@@ -3,8 +3,8 @@ import random
 import math
 
 # constants
-kernelSize = 10 
-points = 64
+kernelSize = 5 
+points = 16
 marker = [ "ro", "bo", "mo", "co", "yo" ]		# Center, sample0, sample1, sample2, sample3
 
 # image
@@ -30,7 +30,14 @@ def generate(img, width, height, kernelSize, points, marker):
 			jj = j + .5
 			sqrDist = ii * ii + jj * jj
 			t = math.floor(value * 4)
-			values[t].append((px + py * width, sqrDist, random.random(), value))
+			
+			if i == 0 and j == 0:
+				values[0].append((px + py * width, 0, 0, value))
+				values[1].append((px + py * width, 0, 0, value))
+				values[2].append((px + py * width, 0, 0, value))
+				values[3].append((px + py * width, 0, 0, value))
+			else:
+				values[t].append((px + py * width, sqrDist, random.random(), value))
 		
 	import matplotlib.pyplot as plt
 	
